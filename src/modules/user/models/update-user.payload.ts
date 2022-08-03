@@ -1,5 +1,5 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsNumber, IsOptional, IsPositive, IsString, IsUrl, MinLength } from "class-validator";
+import { ApiPropertyOptional } from "@nestjs/swagger";
+import { IsOptional, IsString, IsUrl, MinLength } from "class-validator";
 
 export class UpdateUserPayload {
   @ApiPropertyOptional()
