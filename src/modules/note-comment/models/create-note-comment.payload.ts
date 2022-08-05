@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDefined, IsNotEmpty, IsString, Length, MaxLength } from "class-validator";
+import { IsDefined, IsNotEmpty, IsString, MaxLength } from "class-validator";
 
 export class CreateNoteCommentPayload {
 

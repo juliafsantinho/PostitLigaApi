@@ -1,7 +1,4 @@
 import { Module } from "@nestjs/common";
-import { JwtModule } from "@nestjs/jwt";
-import { PassportModule } from "@nestjs/passport";
-import { enviroment } from "src/environment/environment";
 import { UserModule } from "../user/user.module";
 import { AuthTokenModule } from "./auth-token.module";
 import { AuthController } from "./controllers/auth.controller";
