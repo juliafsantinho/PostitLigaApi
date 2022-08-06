@@ -25,19 +25,15 @@ export class NoteService {
     });
   }
 
-  public async getPublic(requestUser: UserEntity, page: number, postsPerPage:number): Promise<NoteEntity[]> {
-    if(postsPerPage === null) postsPerPage = 4;
-
+  public async getPublic(requestUser: UserEntity): Promise<NoteEntity[]> {
     return this.repository.createQueryBuilder('note')
       .andWhere('note.isPublic = :isPublic', { isPublic: true })
-    .leftJoinAndMapOne('note.user', 'note.user', 'user')
-    .leftJoinAndMapMany('note.comments', 'note.comments', 'comments')
-    .leftJoinAndMapOne('comments.user', 'comments.user', 'commentUsers')
-    .leftJoinAndMapMany('note.likes', 'note.likes', 'likes', 'likes.userId = :userId', { userId: requestUser.id })
-    .orderBy('note.updatedAt', 'DESC')
-    .skip((page-1)*postsPerPage)
-    .take(postsPerPage)
-    .getMany();
+      .leftJoinAndMapOne('note.user', 'note.user', 'user')
+      .leftJoinAndMapMany('note.comments', 'note.comments', 'comments')
+      .leftJoinAndMapOne('comments.user', 'comments.user', 'commentUsers')
+      .leftJoinAndMapMany('note.likes', 'note.likes', 'likes', 'likes.userId = :userId', { userId: requestUser.id })
+      .orderBy('note.updatedAt', 'DESC')
+      .getMany();
   }
 
   public async getPublicByUser(userId: number): Promise<NoteEntity[]> {
@@ -87,6 +83,7 @@ export class NoteService {
 
     note.title = payload.title;
     note.annotation = payload.annotation;
+    note.color = payload.color;
     note.userId = requestUser.id;
 
     return await this.repository.save(note);
@@ -104,6 +101,7 @@ export class NoteService {
     note.title = payload.title ?? note.title;
     note.annotation = payload.annotation ?? note.annotation;
     note.isPublic = payload.isPublic ?? note.isPublic;
+    note.color = payload.color ?? note.color;
 
     return await this.repository.save(note);
   }
